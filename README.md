@@ -22,5 +22,5 @@ This is work that I did as part of a group project (with Lingxi Li, Yejun Li, Ji
 - coco_dataset: A simple implementation of `torch.utils.data.Dataset` the Coco Dataset
 - get_datasets.ipynb: A helper notebook to set up the dataset in your workspace
 
-##TODO
+## TODO
     Upload a trained model and include a function for showing a few sample captions on the test set
