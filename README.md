@@ -23,4 +23,4 @@ This is work that I did as part of a group project (with Lingxi Li, Yejun Li, Ji
 - get_datasets.ipynb: A helper notebook to set up the dataset in your workspace
 
 ## TODO
-    Upload a trained model and include a function for showing a few sample captions on the test set
+Upload a trained model and include a function for showing a few sample captions on the test set
