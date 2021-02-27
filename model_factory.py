@@ -1,8 +1,3 @@
-################################################################################
-# CSE 253: Programming Assignment 4
-# Code snippet by Ajit Kumar, Savyasachi
-# Fall 2020
-################################################################################
 import torchvision.models as models
 import torch.nn as nn
 import torch
@@ -33,11 +28,10 @@ class ImageCaptioner(nn.Module):
     
     def predict(self, image):
         features = self.encoder(image)
-        #print(features)
         prediction = self.decoder.predict(features)
         return prediction
     
-    def predict_batch(self, images): #TODO predict as a batch without a loop
+    def predict_batch(self, images): #TODO: predict as a batch without a loop
         predictions = []
         for i in range(images.size(0)):
             predictions.append(self.predict(image[i]))
@@ -59,8 +53,8 @@ class Encoder(nn.Module):
 
     def forward(self, image):
         x = self.resnet(image)
-        y = x.view(x.size(0), -1)
-        output = self.fc(y)
+        x = x.view(x.size(0), -1) #
+        output = self.fc(x)
         return output
 
 class Decoder(nn.Module):
@@ -83,47 +77,23 @@ class Decoder(nn.Module):
     
     def predict(self, features): #need to do as a batch #Can probably figure out a way to just call forward a bunch of times here.
         softmax = nn.Softmax(0)
-        features = torch.unsqueeze(features, 0)
+        features = features.unsqueeze(0) #
         h, c = features, features
         current_word = self.vocab.word2idx['<start>']
-        caption = [] #['<start>'] -  use if you want to include start
+        caption = [] #['<start>'] -  use if you want to include <start> in your caption
         for i in range(self.max_length):
             current_word = torch.LongTensor([current_word]).to(device)
             embedding = self.embed(current_word)
-            embedding = torch.unsqueeze(embedding, 0)
+            embedding = embedding.unsqueeze(0) #
             outputs, (h, c) = self.lstm(embedding, (h,c))
             outputs = self.fc(outputs)
             outputs = outputs.squeeze()
-            outputs = outputs/self.temperature
+            #outputs = outputs/self.temperature #Use for stochastic caption generation
             outputs = softmax(outputs)
-            current_word = torch.multinomial(outputs, 1) #current_word = torch.argmax(outputs)
+            current_word = torch.argmax(outputs) #current_word = torch.multinomial(outputs, 1) #Use for stochastic caption generation
             if current_word == self.vocab.word2idx['<end>']:
                 break
-            caption.append(self.vocab.idx2word[current_word.item()]) #is current word a tensor or an int?  it is a tensor
+            caption.append(self.vocab.idx2word[current_word.item()])
         return caption
     
-    """def predict_batch(self, features):
-        softmax = nn.Softmax(1)
-        batch_size = features.size(0)
-        start = torch.LongTensor(self.vocab.word2idx['<start>'])
-        current_word = start.repeat(batch_size).to(device)
-        captions = torch.zeros(batch_size, max_length)
-        features = torch.unsqueeze(features, 0)
-        h, c = features, features
-        #current_word = torch.LongTensor(self.vocab.word2idx['<start>']).to(device)
-        for i in range(self.max_length):
-            #current_word = torch.LongTensor([current_word]).to(device)
-            embedding = self.embed(current_word)
-            embedding = torch.unsqueeze(embedding, 0)
-            outputs, (h, c) = self.lstm(embedding, (h,c))
-            outputs = self.fc(outputs)
-            outputs = outputs.squeeze() #is this needed here?
-            outputs = outputs/self.temperature
-            outputs = softmax(outputs) #outputs should have shape (batch_size, vocab_size)
-            current_word = torch.multinomial(outputs, 1)
-            caption.append(self.vocab.idx2word[current_word.item()])
-            #if current_word == self.vocab.word2idx['<end>']:
-            #    break
-        return caption"""
-            
-            
+    
