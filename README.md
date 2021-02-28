@@ -8,11 +8,11 @@ This project contains code for building a model which uses ResNet-50 to extract 
 
 ## Using a pretrained model
 
-Running the sample.ipynb notebook will load a trained model and generate captions on test images.  The first cell of this notebook will download the trained model (150 MB) from my Google Drive.  After running the first three cells, each time you run the last cell, it will choose a random image from the test set and generate a caption for it.  Several of the test images are not available from the COCO dataset website (which is where the code pulls images from so that you do not have to download the entire test set), so if you run into an error here, simply run the last cell again to get a new image.
+Running the `sample.ipynb` notebook will load a trained model and generate captions on test images.  The first cell of this notebook will download the trained model (150 MB) from my Google Drive.  After running the first three cells, each time you run the last cell, it will choose a random image from the test set and generate a caption for it.  Several of the test images are not available from the COCO dataset website (which is where the code pulls images from so that you do not have to download the entire test set), so if you run into an error here, simply run the last cell again to get a new image.
 
 ## Training your own model
 
-The code is currently set up to use a specific subset of the COCO dataset for training, validation, and test sets.  If you want to train your own model, you'll need to download the COCO 2014 training dataset to the the folders './data/images/train' and './data/images/val', and the COCO 2014 validation set to the folder './data/images/test'.  Then 
+The code is currently set up to use a specific subset of the COCO dataset for training, validation, and test sets.  If you want to train your own model, you'll need to download the COCO 2014 training dataset to the the folders `./data/images/train` and `./data/images/val`, and the COCO 2014 validation set to the folder `./data/images/test`.  Then: 
 1. Set the parameters for your model and experiment in 'default.json'.
 3. After defining the configuration (say `my_exp.json`) - simply run `python3 main.py my_exp` to start the experiment.
 4. The logs, stats, plots and saved models will be stored in `./experiment_data/my_exp` dir. This can be configured in `contants.py`
