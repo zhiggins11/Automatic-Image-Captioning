@@ -69,26 +69,15 @@ class Experiment(object):
 
         else:
             os.makedirs(self.__experiment_dir)
-
-    def __init_model(self):
-        if torch.cuda.is_available():
-            self.__model = self.__model.cuda().float()
-            self.__criterion = self.__criterion.cuda()
-
-    def to_sentence_tensor(self, caption):
-        sentence = []
-        for i in range(len(caption)):
-            sentence.append(self.__vocab.idx2word[caption[i].item()])
-        return sentence
     
     def make_pic(self, tensor):
         std = torch.tensor([0.229, 0.224, 0.225]).to(device)
         mean = torch.tensor([0.485, 0.456, 0.406]).to(device)
-        z = tensor * std.view(3, 1, 1)
-        z = z + mean.view(3, 1, 1)
-        z = torch.reshape(z, (3,256,256))
-        z = z.to("cpu")
-        image = transforms.ToPILImage(mode='RGB')(z)
+        image = tensor * std.view(3, 1, 1)
+        image = image + mean.view(3, 1, 1)
+        image = torch.reshape(image, (3,256,256))
+        image = image.to("cpu")
+        image = transforms.ToPILImage(mode='RGB')(image)
         display(image)
     
     def run(self):
