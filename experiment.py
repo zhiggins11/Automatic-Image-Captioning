@@ -81,7 +81,7 @@ class Experiment(object):
             sentence.append(self.__vocab.idx2word[caption[i].item()])
         return sentence
     
-    def make_pic(self, ):
+    def make_pic(self, tensor):
         std = torch.tensor([0.229, 0.224, 0.225]).to(device)
         mean = torch.tensor([0.485, 0.456, 0.406]).to(device)
         z = tensor * std.view(3, 1, 1)
