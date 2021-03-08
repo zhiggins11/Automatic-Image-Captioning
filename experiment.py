@@ -1,7 +1,5 @@
 ################################################################################
-# CSE 253: Programming Assignment 4
-# Code snippet by Ajit Kumar, Savyasachi
-# Fall 2020
+# CSE 251B: Programming Assignment 4
 ################################################################################
 
 import matplotlib.pyplot as plt
@@ -14,12 +12,13 @@ from torchvision import transforms
 from datetime import datetime
 
 from caption_utils import *
-from constants import ROOT_STATS_DIR
 from dataset_factory import get_datasets
 from file_utils import *
 from model_factory import get_model
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+ROOT_STATS_DIR = './experiment_data'
+
 
 class Experiment(object):
     def __init__(self, name):
@@ -31,8 +30,7 @@ class Experiment(object):
         self.__experiment_dir = os.path.join(ROOT_STATS_DIR, self.__name)
 
         # Load Datasets
-        self.__coco_test, self.__vocab, self.__train_loader, self.__val_loader, self.__test_loader = get_datasets(
-            config_data)
+        self.__coco_test, self.__vocab, self.__train_loader, self.__val_loader, self.__test_loader = get_datasets(config_data)
         
         # Setup Experiment
         self.__generation_config = config_data['generation']
@@ -50,10 +48,8 @@ class Experiment(object):
         params = list(self.__model.decoder.parameters()) + list(self.__model.encoder.fc.parameters())
         self.__optimizer = optim.Adam(params = params, lr = config_data['experiment']['learning_rate'])
 
-        # Load Experiment Data if available
-        #self.__load_experiment()
+        self.__load_experiment()
 
-    # Loads the experiment data if exists to resume training from last saved checkpoint.
     def __load_experiment(self):
         os.makedirs(ROOT_STATS_DIR, exist_ok=True)
 
