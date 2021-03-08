@@ -3,7 +3,7 @@
 This is work that I did as part of a group project (with Lingxi Li, Yejun Li, Jiawen Zeng, and Yunyi Zhang) for CSE 251B (Neural Networks).  I benefited from discussions with my partners, but all code here was either given by the instructor or written by me.  Specifically, the instructor gave us a skeleton for project and code for loading the datasets, while I created the model (model_factory.py) and wrote the code for training the model and evaluating it on the validation and tests sets (part of experiment.py).
 
 ## Background
-This project contains code for building a model which uses ResNet-50 to extract features from images, and then an LSTM to write captions for them.  It uses the COCO dataset.
+This project contains code for building a model which generates captions for images.  It uses ResNet-50 to extract features from images, and then an LSTM to write captions for them.  It uses the COCO dataset.
 
 
 ## Using a pretrained model
@@ -12,10 +12,10 @@ Running the `sample.ipynb` notebook will load a trained model and generate capti
 
 ## Training your own model
 
-The code is currently set up to use a specific subset of the COCO dataset for training, validation, and test sets.  If you want to train your own model, you'll need to download the COCO 2014 training dataset to the the folders `./data/images/train` and `./data/images/val`, and the COCO 2014 validation set to the folder `./data/images/test`.  Then: 
+If you want to train your own model, you'll need to download some subset of the COCO dataset to use as your training, validation, and test sets.  Then set the first 6 variables under "dataset" in `default.json` to give paths to your images and annotations.  Then: 
 1. Set the parameters for your model and experiment in `default.json`.
-3. After defining the configuration (say `my_exp.json`), simply run `python3 main.py my_exp` to start the experiment.
-4. The logs, stats, plots and saved models will be stored in `./experiment_data/my_exp` directory.
+3. After defining the configuration in `default.json`, simply run `python3 main.py default` to start the experiment.
+4. The logs, stats, plots and saved models will be stored in `./experiment_data/default` directory.
 5. To resume an ongoing experiment, simply run the same command again. It will load the latest stats and models and resume training.
 
 ## Files
