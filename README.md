@@ -20,14 +20,15 @@ The code is currently set up to use a specific subset of the COCO dataset for tr
 
 ## Files
 - main.py: Main driver class
-- experiment.py: Main experiment class. Initialized based on config - takes care of training, saving stats and plots, logging and resuming experiments.
+- default.json: File for specifying the configuration of model and experiment
+- experiment.py: Main experiment class. Initialized based on config in default.json - takes care of training, saving stats and plots, logging and resuming experiments.
 - dataset_factory: Factory to build datasets based on config
 - model_factory.py: Factory to build models based on config
-- constants.py: constants used across the project
-- file_utils.py: utility functions for handling files 
-- caption_utils.py: utility functions to generate bleu scores
+- file_utils.py: Utility functions for handling files 
+- caption_utils.py: Utility functions to generate bleu scores
 - vocab.py: A simple Vocabulary wrapper
 - coco_dataset: A simple implementation of `torch.utils.data.Dataset` the Coco Dataset
+- sample.ipynb: File for generating sample captions on the test set.
 
 ## TODO
 1. Add transformations to training images to improve the model's performance on the validation and test sets.
